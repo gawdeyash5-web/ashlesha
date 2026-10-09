@@ -1,58 +1,101 @@
 # Cosmic Identity — Stellar Object Classification
 
-A hackathon-ready Python project for classifying astronomical survey records into STAR, QSO, and GALAXY.
+A complete, production-ready machine learning system and interactive Streamlit dashboard for classifying astronomical survey records into **STAR**, **QSO (Quasars)**, and **GALAXY**.
 
-## Included
-- `Dataset 41.csv` — supplied dataset
-- `main.py` — train/evaluate model and save reports
-- `app.py` — interactive Streamlit dashboard
-- `cosmic_ml.py` — shared cleaning and ML pipeline
-- `requirements.txt` — dependencies
-- `run_model.bat` and `run_dashboard.bat` — Windows launch helpers
+---
 
-## Requirements
-- Python 3.10 or newer recommended
-- VS Code with the Python extension
+## 🚀 Live Cloud Deployment Options
 
-## Run in VS Code (Windows)
-Open this folder in VS Code, then open Terminal and run:
+### Option 1: Streamlit Community Cloud (Recommended — 100% Free & 1-Click)
+1. Fork or open the repository on GitHub: [gawdeyash5-web/ashlesha](https://github.com/gawdeyash5-web/ashlesha)
+2. Sign in to [share.streamlit.io](https://share.streamlit.io/) with your GitHub account.
+3. Click **"New app"** and fill in:
+   - **Repository:** `gawdeyash5-web/ashlesha`
+   - **Branch:** `main`
+   - **Main file path:** `app.py`
+4. Click **Deploy!** The application will build and be live worldwide with a public URL in ~1 minute.
 
+---
+
+### Option 2: Docker Container Deployment
+You can build and run this application anywhere Docker is installed (Local, AWS ECS, GCP Cloud Run, Azure App Service, DigitalOcean, or Render):
+
+#### Using Docker CLI:
+```bash
+# Build container image
+docker build -t cosmic-identity .
+
+# Run container on port 8501
+docker run -d -p 8501:8501 --name cosmic-identity-app cosmic-identity
+```
+Access at `http://localhost:8501`.
+
+#### Using Docker Compose:
+```bash
+docker compose up -d --build
+```
+
+---
+
+### Option 3: Deploy to Render / Koyeb / Railway / Heroku
+The repository contains a `Procfile` ready for automatic PaaS deployment:
+- Connect your GitHub repository to [Render](https://render.com) as a **Web Service**.
+- Build Command: `pip install -r requirements.txt`
+- Start Command: `streamlit run app.py --server.port=$PORT --server.address=0.0.0.0`
+
+---
+
+## 💻 Local Development Setup
+
+### Quick Start (Windows)
 ```powershell
-py -m venv .venv
+# Create and activate virtual environment
+python -m venv .venv
 .\.venv\Scripts\Activate.ps1
-python -m pip install -r requirements.txt
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run dashboard locally
+streamlit run app.py
+```
+Or simply double-click **`run_dashboard.bat`**.
+
+To re-train the Random Forest model and regenerate metrics/plots:
+```powershell
 python main.py
 ```
+Or double-click **`run_model.bat`**.
 
-To start the dashboard:
+---
 
-```powershell
-python -m streamlit run app.py
+## 📁 Repository Structure
+```text
+├── .github/workflows/
+│   └── ci.yml               # Automated CI test workflow
+├── .streamlit/
+│   └── config.toml          # Production server & theme config
+├── outputs/
+│   ├── confusion_matrix.png # Generated confusion matrix plot
+│   ├── cosmic_model.joblib  # Serialized trained model
+│   ├── feature_importance.png# Top predictive astronomical features
+│   ├── metrics.json         # Accuracy, precision, recall, F1 scores
+│   └── sample_predictions.csv
+├── app.py                   # Streamlit interactive application
+├── cosmic_ml.py             # Data cleaning and scikit-learn ML pipeline
+├── Dataset 41.csv           # Astronomical survey dataset
+├── docker-compose.yml       # Multi-container orchestration
+├── Dockerfile               # Production multi-platform container spec
+├── main.py                  # Standalone training and evaluation script
+├── Procfile                 # Cloud PaaS deployment entrypoint
+├── requirements.txt         # Pinned production Python dependencies
+└── run_dashboard.bat        # Local Windows dashboard launcher
 ```
 
-The browser opens the dashboard. Click **Train Random Forest model**.
+---
 
-If PowerShell blocks environment activation, use Command Prompt and run:
-```bat
-.venv\Scripts\activate.bat
-```
-
-## Run with the included batch files
-1. Double-click `run_model.bat` (or run it from the VS Code terminal).
-2. After the model completes, run `run_dashboard.bat`.
-
-## Pipeline
-1. Load and inspect the CSV.
-2. Standardize target labels and remove exact duplicate records.
-3. Use selected astronomical numeric features only.
-4. Convert non-numeric values to missing, validate coordinates, and handle invalid values.
-5. Impute missing numeric values using a median imputer fitted only on training data.
-6. Split labeled observations into stratified 80% training and 20% testing subsets.
-7. Train a Random Forest classifier and evaluate accuracy, per-class precision/recall/F1 and confusion matrix.
-8. Save charts, metrics, sample predictions and the fitted model in `outputs/`.
-
-## Important notes
-- The target is `Class`. The duplicate label column `class_label` is intentionally excluded to prevent target leakage.
-- This is a first-pass model. Confirm the dataset documentation for invalid sentinel values and astronomy-specific measurement quality rules.
-- Report only the accuracy and metrics printed by your own run; do not promise a particular score in advance.
-- Do not use test results to tune the model repeatedly. For stronger validation, use cross-validation on training data and keep the held-out test set for final evaluation.
+## 🔬 Machine Learning Pipeline
+1. **Cleaning & Validation:** Normalizes coordinate bounds and astronomical magnitudes (`U`, `G`, `R`, `I`, `Z`) and `Redshift`. Target leakage is prevented by isolating features.
+2. **Imputation:** Stratified training median imputer applied strictly to avoid data snooping.
+3. **Model:** Balanced Random Forest Classifier with evaluated per-class precision, recall, and F1 scores.
+4. **Outputs:** Live interactive inference, dataset explorer, model evaluation metrics, and feature importance visualizer.

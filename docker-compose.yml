@@ -1,0 +1,11 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cosmic-identity-dashboard
+    ports:
+      - "8501:8501"
+    restart: unless-stopped
+    environment:
+      - PORT=8501
