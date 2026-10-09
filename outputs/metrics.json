@@ -1,0 +1,94 @@
+{
+  "accuracy": 0.9586543149683081,
+  "training_rows": 82037,
+  "testing_rows": 20510,
+  "data_report": {
+    "original_rows": 105038,
+    "original_columns": 21,
+    "missing_values_before": 21812,
+    "invalid_class_rows_removed": 0,
+    "duplicates_removed": 2491,
+    "clean_rows": 102547,
+    "features": [
+      "Right_Ascension",
+      "Declination",
+      "U_Magnitude",
+      "G_Magnitude",
+      "R_Magnitude",
+      "I_Magnitude",
+      "Z_Magnitude",
+      "Redshift"
+    ],
+    "missing_values_after": 36197,
+    "class_counts": {
+      "GALAXY": 60933,
+      "STAR": 22165,
+      "QSO": 19449
+    }
+  },
+  "classification_report": {
+    "STAR": {
+      "precision": 0.9249790444258172,
+      "recall": 0.9957139634558989,
+      "f1-score": 0.9590439978272678,
+      "support": 4433.0
+    },
+    "QSO": {
+      "precision": 0.9356100104275287,
+      "recall": 0.9226221079691517,
+      "f1-score": 0.9290706704633704,
+      "support": 3890.0
+    },
+    "GALAXY": {
+      "precision": 0.9795832633170896,
+      "recall": 0.956675145647001,
+      "f1-score": 0.9679936900660052,
+      "support": 12187.0
+    },
+    "accuracy": 0.9586543149683081,
+    "macro avg": {
+      "precision": 0.9467241060568119,
+      "recall": 0.9583370723573506,
+      "f1-score": 0.9520361194522144,
+      "support": 20510.0
+    },
+    "weighted avg": {
+      "precision": 0.9594410665308681,
+      "recall": 0.9586543149683081,
+      "f1-score": 0.9586770380938661,
+      "support": 20510.0
+    }
+  },
+  "confusion_matrix": [
+    [
+      4414,
+      4,
+      15
+    ],
+    [
+      73,
+      3589,
+      228
+    ],
+    [
+      285,
+      243,
+      11659
+    ]
+  ],
+  "labels": [
+    "STAR",
+    "QSO",
+    "GALAXY"
+  ],
+  "features": [
+    "Right_Ascension",
+    "Declination",
+    "U_Magnitude",
+    "G_Magnitude",
+    "R_Magnitude",
+    "I_Magnitude",
+    "Z_Magnitude",
+    "Redshift"
+  ]
+}
